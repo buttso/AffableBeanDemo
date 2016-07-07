@@ -1,0 +1,5 @@
+build
+*.class
+*.war
+*.jar
+dist
