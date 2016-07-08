@@ -24,6 +24,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.jms.Destination;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -45,6 +46,9 @@ public class OrderManager {
     private CustomerOrderFacade customerOrderFacade;
     @EJB
     private OrderedProductFacade orderedProductFacade;
+    
+    @EJB
+    private DeliveryManager deliverManager;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public int placeOrder(String name, String email, String phone, String address, String cityRegion, String ccNumber, ShoppingCart cart) {
@@ -53,6 +57,7 @@ public class OrderManager {
             Customer customer = addCustomer(name, email, phone, address, cityRegion, ccNumber);
             CustomerOrder order = addOrder(customer, cart);
             addOrderedItems(order, cart);
+            deliverManager.submitDeliveryAdvice(order);
             return order.getId();
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,6 +150,9 @@ public class OrderManager {
         orderMap.put("products", products);
 
         return orderMap;
+    }
+    
+    public void sendDeliveryAdvice(CustomerOrder order) {
     }
 
 }

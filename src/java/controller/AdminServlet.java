@@ -24,6 +24,7 @@ import javax.servlet.http.*;
 import javax.servlet.http.HttpSession;
 import session.CustomerFacade;
 import session.CustomerOrderFacade;
+import session.DeliveryFacade;
 import session.OrderManager;
 
 /**
@@ -35,6 +36,7 @@ import session.OrderManager;
                            "/admin/",
                            "/admin/viewOrders",
                            "/admin/viewCustomers",
+                           "/admin/viewDeliveries",                           
                            "/admin/customerRecord",
                            "/admin/orderRecord",
                            "/admin/logout"})
@@ -50,13 +52,16 @@ public class AdminServlet extends HttpServlet {
     private CustomerFacade customerFacade;
     @EJB
     private CustomerOrderFacade customerOrderFacade;
+    @EJB
+    private DeliveryFacade deliveryFacade;
+    
 
     private String userPath;
     private Customer customer;
     private CustomerOrder order;
     private List orderList = new ArrayList();
     private List customerList = new ArrayList();
-
+    private List deliveryList = new ArrayList();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -83,6 +88,12 @@ public class AdminServlet extends HttpServlet {
         if (userPath.equals("/admin/viewOrders")) {
             orderList = customerOrderFacade.findAll();
             request.setAttribute("orderList", orderList);
+        }
+        
+        // if viewDelivery is requested
+        if (userPath.equals("/admin/viewDeliveries")) {
+            deliveryList = deliveryFacade.findAll();
+            request.setAttribute("deliveryList", deliveryList);
         }
 
         // if customerRecord is requested

@@ -143,6 +143,29 @@ COMMENT ON TABLE affablebean.ordered_product IS 'matches products with customer 
 CREATE INDEX fk_ord_prod_cust_order ON affablebean.ordered_product (customer_order_id ASC);
 CREATE INDEX fk_ord_prod_prod ON affablebean.ordered_product (product_id ASC);
 
+-- -----------------------------------------------------
+-- Scheduled Delivery
+-- -----------------------------------------------------
+BEGIN
+   EXECUTE IMMEDIATE 'DROP TABLE affablebean.delivery';
+EXCEPTION
+   WHEN OTHERS THEN NULL;
+END;
+/ 
+
+CREATE  TABLE affablebean.delivery (
+  id NUMBER(3) CHECK (id > 0) NOT NULL ,
+  name VARCHAR2(45) NOT NULL ,
+  address VARCHAR2(45) NOT NULL ,
+  order_placed TIMESTAMP NOT NULL,
+  PRIMARY KEY (id));
+
+COMMENT ON TABLE affablebean.category IS 'contains delivery requests'
+
+-- Generate ID using sequence and trigger
+CREATE SEQUENCE affablebean.delivery_seq START WITH 1 INCREMENT BY 1;
+
+
 
 
 /* SET SQL_MODE=@OLD_SQL_MODE; */

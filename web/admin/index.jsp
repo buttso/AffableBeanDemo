@@ -14,9 +14,53 @@
 
     <p><a href="<c:url value='viewOrders'/>">view all orders</a></p>
 
+    <p><a href="<c:url value='viewDeliveries'/>">view all deliveries</a></p>
+
     <p><a href="<c:url value='logout'/>">log out</a></p>
 </div>
 
+<%-- deliveryList is requested --%>
+<c:if test="${!empty deliveryList}">
+
+    <%-- 
+    Delivery::
+    this.id = id;
+    this.name = name;
+    this.address = address;
+    this.orderPlaced = orderPlaced;
+    --%>
+    <table id="adminTable" class="detailsTable">
+
+        <tr class="header">
+            <th colspan="4">deliveries</th>
+        </tr>
+
+        <tr class="tableHeading">
+            <td>delivery id</td>
+            <td>name</td>
+            <td>address</td>
+            <td>placed</td>
+        </tr>
+
+        <c:forEach var="delivery" items="${deliveryList}" varStatus="iter">
+            <tr class="${((iter.index % 2) == 1) ? 'lightBlue' : 'white'} tableRow">
+
+                <%-- Below anchor tags are provided in case JavaScript is disabled --%>
+                <td><span class="noDecoration">${delivery.id}</span></td>
+                <td><span class="noDecoration">${delivery.name}</span></td>
+                <td><span class="noDecoration">${delivery.address}</span></td>
+                <td><span class="noDecoration">
+                        <fmt:formatDate value="${delivery.orderPlaced}"
+                                        type="both"
+                                        dateStyle="short"
+                                        timeStyle="short"/>
+                    </span></td>
+            </tr>
+
+        </c:forEach>
+    </table>
+
+</c:if>
 <%-- customerList is requested --%>
 <c:if test="${!empty customerList}">
 
@@ -36,9 +80,9 @@
         <c:forEach var="customer" items="${customerList}" varStatus="iter">
 
             <tr class="${((iter.index % 2) == 1) ? 'lightBlue' : 'white'} tableRow"
-                onclick="document.location.href='customerRecord?${customer.id}'">
+                onclick="document.location.href = 'customerRecord?${customer.id}'">
 
-              <%-- Below anchor tags are provided in case JavaScript is disabled --%>
+                <%-- Below anchor tags are provided in case JavaScript is disabled --%>
                 <td><a href="customerRecord?${customer.id}" class="noDecoration">${customer.id}</a></td>
                 <td><a href="customerRecord?${customer.id}" class="noDecoration">${customer.name}</a></td>
                 <td><a href="customerRecord?${customer.id}" class="noDecoration">${customer.email}</a></td>
@@ -70,9 +114,9 @@
         <c:forEach var="order" items="${orderList}" varStatus="iter">
 
             <tr class="${((iter.index % 2) == 1) ? 'lightBlue' : 'white'} tableRow"
-                onclick="document.location.href='orderRecord?${order.id}'">
+                onclick="document.location.href = 'orderRecord?${order.id}'">
 
-              <%-- Below anchor tags are provided in case JavaScript is disabled --%>
+                <%-- Below anchor tags are provided in case JavaScript is disabled --%>
                 <td><a href="orderRecord?${order.id}" class="noDecoration">${order.id}</a></td>
                 <td><a href="orderRecord?${order.id}" class="noDecoration">${order.confirmationNumber}</a></td>
                 <td><a href="orderRecord?${order.id}" class="noDecoration">
@@ -133,11 +177,11 @@
         <tr><td colspan="2" style="padding: 0 20px"><hr></td></tr>
 
         <tr class="tableRow"
-            onclick="document.location.href='orderRecord?${order.id}'">
+            onclick="document.location.href = 'orderRecord?${order.id}'">
             <td colspan="2">
                 <%-- Anchor tag is provided in case JavaScript is disabled --%>
                 <a href="orderRecord?${order.id}" class="noDecoration">
-                <strong>view order summary &#x279f;</strong></a></td>
+                    <strong>view order summary &#x279f;</strong></a></td>
         </tr>
     </table>
 
@@ -171,7 +215,7 @@
         <tr>
             <td colspan="2">
                 <table class="embedded detailsTable">
-                   <tr class="tableHeading">
+                    <tr class="tableHeading">
                         <td class="rigidWidth">product</td>
                         <td class="rigidWidth">quantity</td>
                         <td>price</td>
@@ -220,7 +264,7 @@
         <tr><td colspan="3" style="padding: 0 20px"><hr></td></tr>
 
         <tr class="tableRow"
-            onclick="document.location.href='customerRecord?${customer.id}'">
+            onclick="document.location.href = 'customerRecord?${customer.id}'">
             <td colspan="2">
                 <%-- Anchor tag is provided in case JavaScript is disabled --%>
                 <a href="customerRecord?${customer.id}" class="noDecoration">
