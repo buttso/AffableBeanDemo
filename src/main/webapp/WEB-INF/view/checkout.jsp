@@ -165,6 +165,7 @@
                            id="creditcard"
                            name="creditcard"
                            class="creditcard"
+                           placeholder="1111222233334444"
                            value="${param.creditcard}">
                 </td>
             </tr>
