@@ -34,6 +34,7 @@
         <url-pattern>/chooseLanguage</url-pattern>
     </servlet-mapping>-->
 
+    <distributable/>
     <context-param>
         <description>The relative path to product images</description>
         <param-name>productImagePath</param-name>
