@@ -133,6 +133,7 @@
                            maxlength="16"
                            id="phone"
                            name="phone"
+                           placeholder="4155550000"
                            value="${param.phone}">
                 </td>
             </tr>
